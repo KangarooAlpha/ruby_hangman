@@ -6,7 +6,7 @@ class Game < SaveGame
     @@placeholder = placeholder
     @@win = false
     @@letters = ('abcdefghijklmnopqrstuvxyz')
-    if word == nil
+    if word == ""
       read_word()
     end
     play_round()
@@ -19,6 +19,7 @@ class Game < SaveGame
     if (@@word.length() < 5 || @@word.length() > 12)
       @@word = read_word()
     end
+    puts @@word
     @@placeholder = @@placeholder.rjust(@@word.length, '_')
     @@word
   end
