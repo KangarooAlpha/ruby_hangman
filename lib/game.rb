@@ -1,9 +1,9 @@
-class Game < Save_Game
-  def initialize(word = nil, placeholder = "", guesses = 5 )
+class Game < SaveGame
+  def initialize(word = "", placeholder = "", guesses = 5 )
     @@incorrect_letters = []
     @@guesses = guesses
     @@word = word
-    @@palceholder = placeholder
+    @@placeholder = placeholder
     @@win = false
     @@letters = ('abcdefghijklmnopqrstuvxyz')
     if word == nil
@@ -15,11 +15,11 @@ class Game < Save_Game
   def read_word
     @filename = 'google_text_file.txt'
     @@word =  (File.readlines(@filename).sample).chomp
-    puts @@word
+    #puts @@word
     if (@@word.length() < 5 || @@word.length() > 12)
       @@word = read_word()
     end
-    @@placeholder = @@palceholder.rjust(@@word.length, '_')
+    @@placeholder = @@placeholder.rjust(@@word.length, '_')
     @@word
   end
 
@@ -50,8 +50,9 @@ class Game < Save_Game
   def get_letter()
     @letter = gets.chomp!.downcase
     if @letter == 'save'
+      SaveGame.new(@@word, @@placeholder, @@guesses)
       @@guesses = 0
-      save_game(@@word, @@placeholder)
+      exit!
     end
     if (@letter.length > 1 || !@@letters.include?(@letter))
       puts 'Please input a letter.'
